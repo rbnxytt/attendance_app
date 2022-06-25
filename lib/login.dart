@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/user.dart';
 import 'package:my_app/widgets/background.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -43,15 +44,16 @@ class _LoginPageState extends State<LoginPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Image.asset('assets/logo/company_logo.jpeg'),
+                  Transform.scale(
+                      scale: 0.45,
+                      child: Image.asset('assets/logo/company_logo.jpeg')),
                   Text(
                     'Welcome',
                     style: GoogleFonts.montserrat(
                         fontWeight: FontWeight.w700, fontSize: 25.0),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 30.0, vertical: 20.0),
+                    padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 25.0),
                     child: TextFormField(
                       controller: emailController,
                       decoration: const InputDecoration(
@@ -70,10 +72,13 @@ class _LoginPageState extends State<LoginPage> {
                           border: OutlineInputBorder(), hintText: 'Password'),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 80.0, vertical: 30.0),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, UserPage.id);
+                      },
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
@@ -87,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                 ],
               ),
             ),
