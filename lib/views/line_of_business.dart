@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/channel_controller.dart';
+import 'package:provider/provider.dart';
 
 class LineOfBusiness extends StatelessWidget {
   const LineOfBusiness({
@@ -7,6 +9,8 @@ class LineOfBusiness extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String currentStatus =
+        Provider.of<ChannelController>(context).channelStatus;
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: GridView(
@@ -20,12 +24,15 @@ class LineOfBusiness extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('SKRN'),
+                  const Text('SKRN'),
                   ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.green),
-                    onPressed: () {},
-                    child: Text('Check-in'),
+                    onPressed: () {
+                      Provider.of<ChannelController>(context, listen: false)
+                          .changeStatus(currentStatus);
+                    },
+                    child: Text(currentStatus),
                   ),
                 ],
               ),
@@ -38,10 +45,10 @@ class LineOfBusiness extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Text('Like TV'),
+                  const Text('Like TV'),
                   ElevatedButton(
                     onPressed: () {},
-                    child: Text('Check-in'),
+                    child: const Text('Check-in'),
                   ),
                 ],
               ),

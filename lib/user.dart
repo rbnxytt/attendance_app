@@ -1,7 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/constants.dart';
-import 'package:my_app/login.dart';
 import 'package:my_app/views/line_of_business.dart';
 import 'package:my_app/views/logs.dart';
 import 'package:my_app/views/schedule.dart';
@@ -82,7 +81,7 @@ class _UserPageState extends State<UserPage> {
                         child: Image.asset('assets/logo/company_logo.jpeg'),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
@@ -101,10 +100,7 @@ class _UserPageState extends State<UserPage> {
                                   color: Colors.black),
                             ),
                             TextButton(
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, LoginPage.id, (route) => false);
-                              },
+                              onPressed: () => FirebaseAuth.instance.signOut(),
                               child: Text(
                                 'Logout',
                                 style: GoogleFonts.roboto(color: Colors.black),

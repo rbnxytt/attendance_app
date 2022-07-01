@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:my_app/auth.dart';
-import 'package:my_app/user.dart';
 import 'package:my_app/widgets/background.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -30,6 +30,12 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  Future signIn() async {
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController!.text.trim(),
+        password: passwordController!.text.trim());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: const EdgeInsets.fromLTRB(30.0, 50.0, 30.0, 25.0),
                     child: TextFormField(
+                      showCursor: false,
                       controller: emailController,
                       decoration: const InputDecoration(
                           border: OutlineInputBorder(),
@@ -67,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 30.0, vertical: 20.0),
                     child: TextFormField(
+                      showCursor: false,
                       controller: passwordController,
                       obscureText: true,
                       keyboardType: TextInputType.visiblePassword,
@@ -78,16 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 80.0, vertical: 30.0),
                     child: TextButton(
-                      onPressed: () async {
-                        final user = auth.signInWithEmailPassword(
-                            emailController!.text, passwordController!.text);
-                        print(user.toString());
-                        if (user != null) {
-                          Navigator.pushNamed(context, UserPage.id);
-                        } else {
-                          print('try again');
-                        }
-                      },
+                      onPressed: signIn,
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.0),
