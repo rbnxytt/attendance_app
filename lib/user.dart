@@ -1,6 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:my_app/login.dart';
+import 'package:my_app/views/line_of_business.dart';
+import 'package:my_app/views/logs.dart';
+import 'package:my_app/views/schedule.dart';
 import 'package:my_app/widgets/background.dart';
 import 'package:my_app/widgets/ribbon_button.dart';
 import 'package:slide_digital_clock/slide_digital_clock.dart';
@@ -17,61 +20,9 @@ class _UserPageState extends State<UserPage> {
   int currentView = 0;
 
   List<Widget> viewList = [
-    CustomScrollView(
-      slivers: [
-        SliverList(
-            delegate: SliverChildListDelegate([
-          Container(
-            margin:
-                const EdgeInsets.symmetric(horizontal: 50.0, vertical: 30.0),
-            width: double.infinity,
-            child: Column(
-              children: [
-                Container(
-                  decoration: const BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: Colors.pink, width: 2.0))),
-                  height: 30.0,
-                  child: Center(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        SizedBox(
-                          width: 150.0,
-                          child: Center(child: Text('Date')),
-                        ),
-                        SizedBox(
-                          width: 150.0,
-                          child: Center(
-                            child: Text('Check-in'),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 150.0,
-                          child: Center(child: Text('Date')),
-                        ),
-                        SizedBox(
-                          width: 150.0,
-                          child: Center(child: Text('Check-out')),
-                        ),
-                        SizedBox(
-                          width: 150.0,
-                          child: Center(child: Text('Total Hours')),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                for (int i = 0; i < 50; i++) const LogData()
-              ],
-            ),
-          ),
-        ]))
-      ],
-    ),
-    LineOfBusiness(),
-    Text('Test'),
+    const LogView(),
+    const LineOfBusiness(),
+    const ScheduleTable(),
   ];
 
   void viewChange(int tabNum) {
@@ -130,7 +81,7 @@ class _UserPageState extends State<UserPage> {
                         child: Image.asset('assets/logo/company_logo.jpeg'),
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Expanded(
                       child: Padding(
                         padding: const EdgeInsets.only(right: 20.0),
@@ -149,10 +100,7 @@ class _UserPageState extends State<UserPage> {
                                   color: Colors.black),
                             ),
                             TextButton(
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                    context, LoginPage.id, (route) => false);
-                              },
+                              onPressed: () => FirebaseAuth.instance.signOut(),
                               child: Text(
                                 'Logout',
                                 style: GoogleFonts.roboto(color: Colors.black),
@@ -194,85 +142,6 @@ class _UserPageState extends State<UserPage> {
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class LogData extends StatelessWidget {
-  const LogData({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          border:
-              Border(bottom: BorderSide(color: Colors.blueGrey, width: 1.0))),
-      height: 30.0,
-      child: Center(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            SizedBox(
-              width: 150.0,
-              child: Center(child: Text('6/24/2022')),
-            ),
-            SizedBox(
-              width: 150.0,
-              child: Center(
-                child: Text('9:00 PM'),
-              ),
-            ),
-            SizedBox(
-              width: 150.0,
-              child: Center(child: Text('6/25/2022')),
-            ),
-            SizedBox(
-              width: 150.0,
-              child: Center(child: Text('5:00 AM')),
-            ),
-            SizedBox(
-              width: 150.0,
-              child: Center(child: Text('8:00')),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LineOfBusiness extends StatelessWidget {
-  const LineOfBusiness({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: GridView(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 10.0, mainAxisSpacing: 10.0, crossAxisCount: 5),
-        children: const [
-          Card(
-            color: Colors.greenAccent,
-            elevation: 8.0,
-            child: Center(
-              child: Text('SKRN'),
-            ),
-          ),
-          Card(
-            color: Colors.redAccent,
-            elevation: 8.0,
-            child: Center(
-              child: Text('Like TV'),
-            ),
-          )
         ],
       ),
     );
